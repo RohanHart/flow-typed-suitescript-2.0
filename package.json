@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@hitc/netsuite-types": "^2017.2.23",
+    "@hitc/netsuite-types": "^2019.2.8",
     "flow-bin": "^0.115.0",
     "flow-typed": "^2.2.3"
   }
