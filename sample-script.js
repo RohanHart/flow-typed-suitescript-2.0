@@ -1,67 +1,63 @@
-// @flow
+// @flow strict
 
 /**
  * An example of how to integrate Flow's module system into the module style which SuiteScript 2.0 uses
- */
-
-/*::
-import type {MapReduce$getInputData, MapReduce$map, MapReduce$reduce, MapReduce$summarize} from 'N/types';
-
-import * as record from 'N/record';
-import * as runtime from 'N/runtime';
-import * as search from 'N/search';
-import { Filter } from 'N/search';
-import * as format from 'N/format';
-import * as task from 'N/task';
-import { MapReduceScriptTaskCreateOptions } from 'N/task';
-
-const define = (_, build) => build(record, runtime, search, format, task);
-*/
-
-/**
- *@NApiVersion 2.x
- *@NScriptType MapReduceScript
+ *
+ * @NApiVersion 2.x
+ * @NScriptType MapReduceScript
 */
 
 /*::
-module.exports =
+  // import the modules in a Flow supported way
+  import type { MapReduceScript } from 'N/types';
+  import { runtime, task } from 'N';
+
+  // provide the modules to the define function
+  const define = (_, build) => build(runtime, task);
+
+  // export the script in a Flow supported way
+  module.exports =
 */
 define(
-  ['N/record','N/runtime','N/search','N/format','N/task'],
-  function(record,runtime,search,formater,task) {
-
+  ['N/runtime','N/task'],
+  function(runtime,task) {
     /**
-     * How to assign types to a variable
-     */ 
-    var getInputData /*: MapReduce$getInputData */ = function(){
-
+     * Assign types to a variable
+     */
+    var getInputData = function(context){
       /**
-       * How to specify which of the possible types this method returns in this case
+       * Determine which of the possible types this method returns in this case
        */
-      var foo /*: string */ = runtime
+      var foo = runtime
           .getCurrentScript()
           .getParameter({name: 'foo'});
-      
+      if (typeof foo === 'string') {
+        foo.substr(0,1);
+      }
+
+      return [];
     };
-    
-    var map /*: MapReduce$map */ = function(context){
+
+    var reduce = function(context){
     };
-   
-    var reduce /*: MapReduce$reduce */ = function(context){
-    };
-    
-    var summarize /*: MapReduce$summarize */ = function(summary){
+
+    var summarize = function(context){
 
       /**
        * Unfortunately due to limitations some parameters will require a type annotation
        */
-      task.create({taskType: (task.TaskType.MAP_REDUCE /*: typeof task.TaskType.MAP_REDUCE */)});
+      var bob = task.create({
+        taskType: (task.TaskType.MAP_REDUCE /*: typeof task.TaskType.MAP_REDUCE */),
+        scriptId: 'bob'
+      });
     };
-    
-    return {
-      getInputData : getInputData,
-      map : map,
-      reduce : reduce,
-      summarize : summarize
-    };
+
+    /**
+     * Define the script's entry points
+     */
+    return ({
+      getInputData: getInputData,
+      reduce: reduce,
+      summarize: summarize
+    } /*: MapReduceScript */);
 });
