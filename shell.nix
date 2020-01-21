@@ -1,7 +1,8 @@
 let
   pkgs = import (builtins.fetchGit {
     url = git://github.com/NixOS/nixpkgs-channels;
-    ref = "nixos-19.09";
+    ref = "nixos-unstable";
+    rev = "d5e9b7d5a7c011605d7215b88efd70ccf8643ede";
   }) {};
 in
   pkgs.mkShell {
