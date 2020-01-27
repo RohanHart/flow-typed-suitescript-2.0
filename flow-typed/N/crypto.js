@@ -55,7 +55,7 @@ declare module 'N/crypto' {
     /**
      * Calculates the digest of the data to be hashed.
      */
-    digest(options: FinalOptions): string;
+    digest(options?: FinalOptions): string;
 
     /**
      * Method used to update hash data with the encoding specified.

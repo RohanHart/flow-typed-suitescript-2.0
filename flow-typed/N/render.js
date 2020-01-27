@@ -8,7 +8,7 @@
 declare module 'N/render' {
 
   import type { File } from 'N/file';
-  import type { Record } from 'N/record';
+  import type { NSRecord as Record } from 'N/record';
   import type { ServerResponse } from 'N/http';
   import type { Result } from 'N/search';
   import type { NSXMLDocument } from 'N/xml';

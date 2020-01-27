@@ -9,7 +9,7 @@ declare module 'N/types' {
 
   import type { ServerRequest, ServerResponse } from "N/http";
   import type { Portlet } from "N/portlet";
-  import type { Record, ClientCurrentRecord } from "N/record";
+  import type { NSRecord as Record, ClientCurrentRecord } from "N/record";
   import type { Search } from "N/search";
   import type { Form } from "N/ui/serverWidget";
 
@@ -271,7 +271,7 @@ declare module 'N/types' {
       +errors: MapReduce$MapReduceErrorIteratorContainer;
       +key: string;
       +value: string;
-      +write: (key: string, value: string) => void;
+      +write: ({key: string, value: string}) => void;
   }
 
   declare type MapReduce$map = (
@@ -284,7 +284,7 @@ declare module 'N/types' {
       +errors: MapReduce$MapReduceErrorIteratorContainer;
       +key: string;
       +values: string[];
-      +write: (key: string, value: string) => void;
+      +write: ({key: string, value: string}) => void;
   }
 
   declare type MapReduce$reduce = (

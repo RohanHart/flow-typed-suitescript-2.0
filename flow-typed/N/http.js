@@ -116,7 +116,7 @@ declare module 'N/http' {
      */
     group: string;
   }
-  declare export interface GetOptions {
+  declare type GetOptions = {|
     /**
      * The HTTP URL being requested.
      */
@@ -125,7 +125,7 @@ declare module 'N/http' {
     /**
      * -optional- The HTTP headers.
      */
-    headers?: any;
+    headers?: {[key: string]: string, ...};
 
     /**
      * Pass an array of GUIDs here to be decoded by the server. Reference GUIDs must be in curly braces where used.
@@ -134,54 +134,48 @@ declare module 'N/http' {
      * Confirmed that this actually a thing, as of NetSuite 2019.2.  Used in HITC SMS Suitelet for basic authentication.
      */
     credentials?: string[];
-  }
-  declare export type DeleteOptions = { ... } & GetOptions;
-  declare export type PostOptions = {
+  |}
+  declare type DeleteOptions = GetOptions;
+  declare type PostOptions = {|
+    ...GetOptions,
     /**
      * The POST data.
      */
-    body: string | any,
-    ...
-  } & GetOptions;
-  declare export type PutOptions = { ... } & PostOptions;
-  declare export type RequestOptions = {
+    +body: string | any,
+  |};
+  declare type PutOptions = PostOptions;
+  declare type RequestOptions = {|
+    ...GetOptions,
     /**
      * The HTTP request method. Set using the http.Method enum.
-     * Allow usage as string here as N/http is a heavy import just
-     * to get an enum.
      */
-    method: $Values<MethodT> | string,
+    method: $Values<MethodT>,
 
     /**
      * -optional- The POST data if the method is POST. If method is DELETE, body data is ignored.
      */
     body?: string | any,
-    ...
-  } & GetOptions;
-  declare export interface HttpDeleteFunction {
+  |};
+  declare interface HttpDeleteFunction {
     (options: DeleteOptions): ClientResponse;
     promise(options: DeleteOptions): Promise<ClientResponse>;
   }
-  declare export interface HttpGetFunction {
+  declare interface HttpGetFunction {
     (options: GetOptions): ClientResponse;
     promise(options: GetOptions): Promise<ClientResponse>;
   }
-  declare export interface HttpPostFunction {
-    (options: PostOptions): ClientResponse;
-    promise(options: PostOptions): Promise<ClientResponse>;
-  }
-  declare export interface HttpPutFunction {
+  declare interface HttpPutFunction {
     (options: PutOptions): ClientResponse;
     promise(options: PutOptions): Promise<ClientResponse>;
   }
-  declare export interface HttpRequestFunction {
+  declare interface HttpRequestFunction {
     (options: RequestOptions): ClientResponse;
     promise(options: RequestOptions): Promise<ClientResponse>;
   }
   /**
    * Encapsulates the response to an HTTP client request.
    */
-  declare export interface ClientResponse {
+  declare interface ClientResponse {
     /**
      * The client response body.
      */
@@ -216,7 +210,7 @@ declare module 'N/http' {
   /**
    * Encapsulates the HTTP request information sent to an HTTP server. For example, a request received by a Suitelet or RESTlet.
    */
-  declare export interface ServerRequest {
+  declare interface ServerRequest {
     /**
      * Method used to return the number of lines in a sublist.
      */
@@ -267,7 +261,7 @@ declare module 'N/http' {
   /**
    * Encapsulates the response from an HTTP server to an HTTP request. For example, a response from a Suitelet or RESTlet.
    */
-  declare export interface ServerResponse {
+  declare interface ServerResponse {
     /**
      * Method used to add a header to the response.
      * If the same header has already been set, this method adds another line for that header.
@@ -383,7 +377,10 @@ declare module 'N/http' {
     /**
      * Sends an HTTP POST request and returns the response.
      */
-    post: HttpPostFunction;
+    post: {
+      (options: PostOptions): ClientResponse;
+      promise(options: PostOptions): Promise<ClientResponse>;
+    };
     /**
      * Sends an HTTP PUT request and returns the response.
      */
@@ -393,6 +390,7 @@ declare module 'N/http' {
      * This enum is used to set the value of the ServerResponse.setCdnCacheable(options) property.
      */
     CacheDuration: CacheDurationT;
+    Method: MethodT;
     RedirectType: RedirectTypeT;
   }
 

@@ -1126,11 +1126,17 @@ declare class JSON {
     space?: string | number
   ): string;
 }
-declare interface ReadonlyArray<T> {
+/**
+ * All the Array.prototype methods and properties that don't mutate the array.
+ */
+declare class $ReadOnlyArray<+T> {
+    +[key: number]: T;
+  @@iterator(): Iterator<T>;
+
   /**
    * Gets the length of the array. This is a number one higher than the highest element defined in an array.
    */
-  +length: number;
+    +length: number;
 
   /**
    * Returns a string representation of an array.
@@ -1146,13 +1152,7 @@ declare interface ReadonlyArray<T> {
    * Combines two or more arrays.
    * @param items Additional items to add to the end of array1.
    */
-  concat(...items: ConcatArray<T>[]): T[];
-
-  /**
-   * Combines two or more arrays.
-   * @param items Additional items to add to the end of array1.
-   */
-  concat(...items: (T | ConcatArray<T>)[]): T[];
+  concat<S, Item: $ReadOnlyArray<S> | S>(...items: Array<Item>): Array<T | S>;
 
   /**
    * Adds all the elements of an array separated by the specified separator string.
@@ -1165,7 +1165,7 @@ declare interface ReadonlyArray<T> {
    * @param start The beginning of the specified portion of the array.
    * @param end The end of the specified portion of the array. This is exclusive of the element at the index 'end'.
    */
-  slice(start?: number, end?: number): T[];
+  slice(start?: number, end?: number): Array<T>;
 
   /**
    * Returns the index of the first occurrence of a value in an array.
@@ -1190,7 +1190,7 @@ declare interface ReadonlyArray<T> {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    callbackfn: (value: T, index: number, array: $ReadOnlyArray<T>) => mixed,
+    callbackfn: (value: T, index: number, array: $ReadOnlyArray<T>) => boolean,
     thisArg?: any
   ): boolean;
 
@@ -1203,7 +1203,7 @@ declare interface ReadonlyArray<T> {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    callbackfn: (value: T, index: number, array: $ReadOnlyArray<T>) => mixed,
+    callbackfn: (value: T, index: number, array: $ReadOnlyArray<T>) => boolean,
     thisArg?: any
   ): boolean;
 
@@ -1225,17 +1225,7 @@ declare interface ReadonlyArray<T> {
   map<U>(
     callbackfn: (value: T, index: number, array: $ReadOnlyArray<T>) => U,
     thisArg?: any
-  ): U[];
-
-  /**
-   * Returns the elements of an array that meet the condition specified in a callback function.
-   * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
-   * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
-   */
-  filter<S: T>(
-    callbackfn: (value: T, index: number, array: $ReadOnlyArray<T>) => boolean,
-    thisArg?: any
-  ): S[];
+  ): Array<U>;
 
   /**
    * Returns the elements of an array that meet the condition specified in a callback function.
@@ -1243,31 +1233,17 @@ declare interface ReadonlyArray<T> {
    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    callbackfn: (value: T, index: number, array: $ReadOnlyArray<T>) => mixed,
+    callbackfn: (value: T, index: number, array: $ReadOnlyArray<T>) => boolean,
     thisArg?: any
-  ): T[];
+  ): Array<T>;
+  filter(callbackfn: typeof Boolean): Array<$NonMaybeType<T>>;  // special case for the function "Boolean"
 
   /**
    * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
    * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
-   * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
    */
   reduce(
-    callbackfn: (
-      previousValue: T,
-      currentValue: T,
-      currentIndex: number,
-      array: $ReadOnlyArray<T>
-    ) => T
-  ): T;
-  reduce(
-    callbackfn: (
-      previousValue: T,
-      currentValue: T,
-      currentIndex: number,
-      array: $ReadOnlyArray<T>
-    ) => T,
-    initialValue: T
+    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: $ReadOnlyArray<T>) => T,
   ): T;
 
   /**
@@ -1276,36 +1252,16 @@ declare interface ReadonlyArray<T> {
    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
    */
   reduce<U>(
-    callbackfn: (
-      previousValue: U,
-      currentValue: T,
-      currentIndex: number,
-      array: $ReadOnlyArray<T>
-    ) => U,
+    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: $ReadOnlyArray<T>) => U,
     initialValue: U
   ): U;
 
   /**
    * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
    * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.
-   * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
    */
   reduceRight(
-    callbackfn: (
-      previousValue: T,
-      currentValue: T,
-      currentIndex: number,
-      array: $ReadOnlyArray<T>
-    ) => T
-  ): T;
-  reduceRight(
-    callbackfn: (
-      previousValue: T,
-      currentValue: T,
-      currentIndex: number,
-      array: $ReadOnlyArray<T>
-    ) => T,
-    initialValue: T
+    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: $ReadOnlyArray<T>) => T,
   ): T;
 
   /**
@@ -1314,45 +1270,22 @@ declare interface ReadonlyArray<T> {
    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
    */
   reduceRight<U>(
-    callbackfn: (
-      previousValue: U,
-      currentValue: T,
-      currentIndex: number,
-      array: $ReadOnlyArray<T>
-    ) => U,
+    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: $ReadOnlyArray<T>) => U,
     initialValue: U
   ): U;
-  [n: number]: T;
 }
-declare interface ConcatArray<T> {
-  +length: number;
-  [n: number]: T;
-  join(separator?: string): string;
-  slice(start?: number, end?: number): T[];
-}
-declare class Array<T> {
-  constructor(arrayLength?: number): any[];
-  constructor<T>(arrayLength: number): T[];
-  constructor<T>(...items: T[]): T[];
-  static (arrayLength?: number): any[];
-  static <T>(arrayLength: number): T[];
-  static <T>(...items: T[]): T[];
-  static isArray(arg: any): boolean;
+declare class Array<T> extends $ReadOnlyArray<T> {
+  static (length: number): Array<T>;
+  static <U>(...values:Array<U>): Array<U>;
+
+  static isArray(arg: mixed): boolean;
+
+  [key: number]: T;
 
   /**
    * Gets or sets the length of the array. This is a number one higher than the highest element defined in an array.
    */
   length: number;
-
-  /**
-   * Returns a string representation of an array.
-   */
-  toString(): string;
-
-  /**
-   * Returns a string representation of an array. The elements are converted to string using their toLocalString methods.
-   */
-  toLocaleString(): string;
 
   /**
    * Removes the last element from an array and returns it.
@@ -1363,42 +1296,17 @@ declare class Array<T> {
    * Appends new elements to an array, and returns the new length of the array.
    * @param items New elements of the Array.
    */
-  push(...items: T[]): number;
-
-  /**
-   * Combines two or more arrays.
-   * @param items Additional items to add to the end of array1.
-   */
-  concat(...items: ConcatArray<T>[]): T[];
-
-  /**
-   * Combines two or more arrays.
-   * @param items Additional items to add to the end of array1.
-   */
-  concat(...items: (T | ConcatArray<T>)[]): T[];
-
-  /**
-   * Adds all the elements of an array separated by the specified separator string.
-   * @param separator A string used to separate one element of an array from the next in the resulting String. If omitted, the array elements are separated with a comma.
-   */
-  join(separator?: string): string;
+  push(...items: Array<T>): number;
 
   /**
    * Reverses the elements in an Array.
    */
-  reverse(): T[];
+  reverse(): Array<T>;
 
   /**
    * Removes the first element from an array and returns it.
    */
   shift(): T | void;
-
-  /**
-   * Returns a section of an array.
-   * @param start The beginning of the specified portion of the array.
-   * @param end The end of the specified portion of the array. This is exclusive of the element at the index 'end'.
-   */
-  slice(start?: number, end?: number): T[];
 
   /**
    * Sorts an array.
@@ -1409,14 +1317,7 @@ declare class Array<T> {
    * [11,2,22,1].sort((a, b) => a - b)
    * ```
    */
-  sort(compareFn?: (a: T, b: T) => number): this;
-
-  /**
-   * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
-   * @param start The zero-based location in the array from which to start removing elements.
-   * @param deleteCount The number of elements to remove.
-   */
-  splice(start: number, deleteCount?: number): T[];
+  sort(compareFn?: (a: T, b: T) => number): Array<T>;
 
   /**
    * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.
@@ -1424,27 +1325,13 @@ declare class Array<T> {
    * @param deleteCount The number of elements to remove.
    * @param items Elements to insert into the array in place of the deleted elements.
    */
-  splice(start: number, deleteCount: number, ...items: T[]): T[];
+  splice(start: number, deleteCount: number, ...items: Array<T>): Array<T>;
 
   /**
    * Inserts new elements at the start of an array.
    * @param items Elements to insert at the start of the Array.
    */
-  unshift(...items: T[]): number;
-
-  /**
-   * Returns the index of the first occurrence of a value in an array.
-   * @param searchElement The value to locate in the array.
-   * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0.
-   */
-  indexOf(searchElement: T, fromIndex?: number): number;
-
-  /**
-   * Returns the index of the last occurrence of a specified value in an array.
-   * @param searchElement The value to locate in the array.
-   * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at the last index in the array.
-   */
-  lastIndexOf(searchElement: T, fromIndex?: number): number;
+  unshift(...items: Array<T>): number;
 
   /**
    * Determines whether all the members of an array satisfy the specified test.
@@ -1455,7 +1342,7 @@ declare class Array<T> {
    * If thisArg is omitted, undefined is used as the this value.
    */
   every(
-    callbackfn: (value: T, index: number, array: T[]) => mixed,
+    callbackfn: (value: T, index: number, array: Array<T>) => boolean,
     thisArg?: any
   ): boolean;
 
@@ -1468,7 +1355,7 @@ declare class Array<T> {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(
-    callbackfn: (value: T, index: number, array: T[]) => mixed,
+    callbackfn: (value: T, index: number, array: Array<T>) => boolean,
     thisArg?: any
   ): boolean;
 
@@ -1478,7 +1365,7 @@ declare class Array<T> {
    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
   forEach(
-    callbackfn: (value: T, index: number, array: T[]) => void,
+    callbackfn: (value: T, index: number, array: Array<T>) => void,
     thisArg?: any
   ): void;
 
@@ -1488,19 +1375,9 @@ declare class Array<T> {
    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
   map<U>(
-    callbackfn: (value: T, index: number, array: T[]) => U,
+    callbackfn: (value: T, index: number, array: Array<T>) => U,
     thisArg?: any
-  ): U[];
-
-  /**
-   * Returns the elements of an array that meet the condition specified in a callback function.
-   * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
-   * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
-   */
-  filter<S: T>(
-    callbackfn: (value: T, index: number, array: T[]) => boolean,
-    thisArg?: any
-  ): S[];
+  ): Array<U>;
 
   /**
    * Returns the elements of an array that meet the condition specified in a callback function.
@@ -1508,31 +1385,16 @@ declare class Array<T> {
    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
   filter(
-    callbackfn: (value: T, index: number, array: T[]) => mixed,
+    callbackfn: (value: T, index: number, array: Array<T>) => boolean,
     thisArg?: any
-  ): T[];
+  ): Array<T>;
 
   /**
    * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
    * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.
-   * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
    */
   reduce(
-    callbackfn: (
-      previousValue: T,
-      currentValue: T,
-      currentIndex: number,
-      array: T[]
-    ) => T
-  ): T;
-  reduce(
-    callbackfn: (
-      previousValue: T,
-      currentValue: T,
-      currentIndex: number,
-      array: T[]
-    ) => T,
-    initialValue: T
+    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: Array<T>) => T,
   ): T;
 
   /**
@@ -1541,36 +1403,16 @@ declare class Array<T> {
    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
    */
   reduce<U>(
-    callbackfn: (
-      previousValue: U,
-      currentValue: T,
-      currentIndex: number,
-      array: T[]
-    ) => U,
+    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: Array<T>) => U,
     initialValue: U
   ): U;
 
   /**
    * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.
    * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.
-   * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
    */
   reduceRight(
-    callbackfn: (
-      previousValue: T,
-      currentValue: T,
-      currentIndex: number,
-      array: T[]
-    ) => T
-  ): T;
-  reduceRight(
-    callbackfn: (
-      previousValue: T,
-      currentValue: T,
-      currentIndex: number,
-      array: T[]
-    ) => T,
-    initialValue: T
+    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: Array<T>) => T,
   ): T;
 
   /**
@@ -1579,15 +1421,9 @@ declare class Array<T> {
    * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.
    */
   reduceRight<U>(
-    callbackfn: (
-      previousValue: U,
-      currentValue: T,
-      currentIndex: number,
-      array: T[]
-    ) => U,
+    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: Array<T>) => U,
     initialValue: U
   ): U;
-  [n: number]: T;
 }
 declare interface TypedPropertyDescriptor<T> {
   enumerable?: boolean;

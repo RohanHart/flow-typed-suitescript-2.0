@@ -991,7 +991,7 @@ declare module 'N/record' {
      */
     type: $Values<TypeT> | string;
   }
-  declare export class Record extends ClientCurrentRecord {
+  declare export class NSRecord extends ClientCurrentRecord {
     /**
      * Returns the body field names (internal ids) of all the fields in the record, including machine header field and matrix header fields.
      */

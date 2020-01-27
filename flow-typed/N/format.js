@@ -9,7 +9,7 @@ declare module 'N/format' {
 
   import type { FieldValue } from 'N/record';
 
-  declare interface FormatOptions {
+  declare export interface FormatOptions {
     /**
      * The input data to format.
      */
@@ -18,9 +18,9 @@ declare module 'N/format' {
     /**
      * The field type (for example, DATE, CURRENCY, INTEGER). Set using the format.Type enum.
      */
-    type: $Values<TypeT>;
+    +type: $Values<TypeT>;
   }
-  declare interface FormatDateTimeOptions {
+  declare export interface FormatDateTimeOptions {
     /**
      * The Date Object being converted into a string.
      * If parsing a string to a timezone, the string must include seconds.
@@ -30,7 +30,7 @@ declare module 'N/format' {
     /**
      * The field type (DATE or DATETIME or DATETIMETX). Set using the format.Type enum.
      */
-    type: $Values<DateTypeT>;
+    +type: $Values<DateTypeT>;
 
     /**
      * -optional- The time zone specified for the returned string. Set using the format.Timezone enum or key.
@@ -39,7 +39,7 @@ declare module 'N/format' {
      */
     timezone?: $Values<TimezoneT>;
   }
-  declare interface FormatNumberOptions {
+  declare export interface FormatNumberOptions {
     /**
      * The input data to format.
      */
@@ -48,7 +48,7 @@ declare module 'N/format' {
     /**
      * The field type (for example, DATE, CURRENCY, INTEGER). Set using the format.Type enum.
      */
-    type: $Values<NumberTypeT>;
+    +type: $Values<NumberTypeT>;
   }
 
   declare type DateTypeT = {|
@@ -216,19 +216,19 @@ declare module 'N/format' {
      * Use parse to convert a string into an object, like a Date.
      * Options: value (Date|string|number), type (format.FormatType).
      */
-    parse: (options: FormatOptions) => Date | string | number;
+    parse(options: FormatOptions): Date | string | number;
 
     /**
      * Use parse to convert a string into an object, like a Date.
      * Options: value (Date|string), type (format.FormatType), timezone (enum).
      */
-    parse: (options: FormatDateTimeOptions) => Date | string | number;
+    parse(options: FormatDateTimeOptions): Date | string | number;
 
     /**
      * Use parse to convert a string into a number.
      * Options: value (number|string), type (format.FormatType).
      */
-    parse: (options: FormatNumberOptions) => number;
+    parse(options: FormatNumberOptions): number;
 
     Type: TypeT;
     Timezone: TimezoneT;

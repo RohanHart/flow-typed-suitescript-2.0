@@ -7,7 +7,7 @@
 
 declare module 'N/config' {
 
-  import type { Record } from 'N/record';
+  import type { NSRecord as Record } from 'N/record';
 
   declare export interface LoadOptions {
     /**

@@ -7,19 +7,7 @@
 
 declare module 'N/https' {
 
-  import type {
-    ClientResponse as _ClientResponse,
-    ServerRequest as _ServerRequest,
-    ServerResponse as _ServerResponse,
-    HttpDeleteFunction,
-    HttpGetFunction,
-    HttpPostFunction,
-    HttpPutFunction,
-    HttpRequestFunction,
-    CacheDurationT,
-    MethodT,
-    RedirectTypeT,
-  } from "N/http";
+  import type { NHttp } from "N/http";
   import type { EncodingT } from "N/encode";
   import type { HashAlgT, SecretKey } from "N/crypto";
 
@@ -128,16 +116,7 @@ declare module 'N/https' {
     toString(): string;
   }
 
-  declare export type ClientResponse = _ClientResponse;
-  declare export type ServerRequest = _ServerRequest;
-  declare export type ServerResponse = _ServerResponse;
-  declare export type GetOptions = _GetOptions;
-  declare export type DeleteOptions = _DeleteOptions;
-  declare export type PostOptions = _PostOptions;
-  declare export type PutOptions = _PutOptions;
-  declare export type RequestOptions = _RequestOptions;
-
-  declare export interface NHttps {
+  declare export interface NHttps extends NHttp {
     /**
      * Creates a key for the contents of a credential field.
      */
@@ -146,15 +125,9 @@ declare module 'N/https' {
      * Creates an https.SecureString object.
      */
     createSecureString: HttpsCreateSecureStringFunction;
-    get: HttpGetFunction;
-    delete: HttpDeleteFunction;
-    post: HttpPostFunction;
-    put: HttpPutFunction;
-    request: HttpRequestFunction;
-    CacheDuration: CacheDurationT;
-    Method: MethodT;
-    RedirectType: RedirectTypeT;
+
     Encoding: EncodingT;
+    HashAlg: HashAlgT;
   }
 
 }
