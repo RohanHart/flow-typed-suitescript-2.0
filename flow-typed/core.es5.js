@@ -1450,12 +1450,6 @@ declare type ParameterDecorator = (
   propertyKey: string | Symbol,
   parameterIndex: number
 ) => void;
-declare type PromiseConstructorLike = (
-  executor: (
-    resolve: (value?: T | PromiseLike<T>) => void,
-    reject: (reason?: any) => void
-  ) => void
-) => PromiseLike<T>;
 declare interface PromiseLike<T> {
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1477,7 +1471,14 @@ declare interface PromiseLike<T> {
 /**
  * Represents the completion of an asynchronous operation
  */
-declare interface Promise<T> {
+declare class Promise<T> {
+  constructor(
+    executor: (
+      resolve: (value?: T | PromiseLike<T>) => void,
+      reject: (reason?: any) => void
+    ) => void
+  ): void;
+
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

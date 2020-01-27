@@ -46,7 +46,6 @@ declare module N {
   import type { NHttps } from 'N/https';
   declare export var https: NHttps;
 
-  import type { NLog } from 'N/log';
   declare export var log: NLog;
 
   import type { NPlugin } from 'N/plugin';
@@ -97,7 +96,6 @@ declare module N {
   import type { NUi$ServerWidget } from 'N/ui/serverWidget';
   declare export var ui$serverWidget: NUi$ServerWidget;
 
-  import type { NUtil } from 'N/util';
   declare export var util: NUtil;
 
   import type { NWorkflow } from 'N/workflow';
