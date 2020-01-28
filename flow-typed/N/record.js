@@ -64,7 +64,7 @@ declare module 'N/record' {
 
     /**
      * Determines whether the new record is dynamic. If set to true, the record is created in dynamic mode. If set to false, the record is created in standard mode. By default, this value is false.
-     * - When a SuiteScript 2.0 script creates, copies, loads, or transforms a record in standard mode, the record’s body fields and sublist line items are not sourced, calculated, and validated until the record is saved (submitted) with Record.save(options).
+     * - When a SuiteScript 2.0 script creates, copies, loads, or transforms a record in standard mode, the record’s body fields and sublist line items are not sourced, calculated, and validated until the record is saved (submitted) with NSRecord.save(options).
      * - When you work with a record in standard mode, you do not need to set values in any particular order. After submitting the record, NetSuite processes the record’s body fields and sublist line items in the correct order, regardless of the organization of your script.
      * - When a SuiteScript 2.0 script creates, copies, loads, or transforms a record in dynamic mode, the record’s body fields and sublist line items are sourced, calculated, and validated in real-time. A record in dynamic mode emulates the behavior of a record in the UI.
      * - When you work with a record in dynamic mode, it is important that you set values in the same order you would within the UI. If you fail to do this, your results may not be accurate.
@@ -723,13 +723,13 @@ declare module 'N/record' {
     /**
      * Cancels the currently selected line on a sublist.
      */
-    cancelLine(options: CancelCommitLineOptions): Record;
-    cancelLine(sublistId: string): Record;
+    cancelLine(options: CancelCommitLineOptions): NSRecord;
+    cancelLine(sublistId: string): NSRecord;
 
     /**
      * Commits the currently selected line on a sublist.
      */
-    commitLine(options: CancelCommitLineOptions): Record;
+    commitLine(options: CancelCommitLineOptions): NSRecord;
     copy: RecordCopyFunction;
 
     /**
@@ -770,7 +770,7 @@ declare module 'N/record' {
     /**
      * Gets the subrecord for the associated sublist field on the current line.
      */
-    getCurrentSublistSubrecord(options: GetCurrentSublistValueOptions): Record;
+    getCurrentSublistSubrecord(options: GetCurrentSublistValueOptions): NSRecord;
 
     /**
      * Returns a text representation of the field value in the currently selected line.
@@ -863,7 +863,7 @@ declare module 'N/record' {
     /**
      * Gets the subrecord for the associated field.
      */
-    getSubrecord(options: GetFieldOptions): Record;
+    getSubrecord(options: GetFieldOptions): NSRecord;
 
     /**
      * Returns the text representation of a field value.
@@ -947,7 +947,7 @@ declare module 'N/record' {
      */
     setCurrentMatrixSublistValue(
       options: SetCurrentMatrixSublistValueOptions
-    ): Record;
+    ): NSRecord;
 
     /**
      * Sets the value for the field in the currently selected line by a text representation.
@@ -967,12 +967,12 @@ declare module 'N/record' {
     /**
      * Sets the value for the associated header in the matrix.
      */
-    setMatrixHeaderValue(options: SetCurrentMatrixSublistValueOptions): Record;
+    setMatrixHeaderValue(options: SetCurrentMatrixSublistValueOptions): NSRecord;
 
     /**
      * Sets the value for the associated field in the matrix.
      */
-    setMatrixSublistValue(options: SetSublistValueOptions): Record;
+    setMatrixSublistValue(options: SetSublistValueOptions): NSRecord;
 
     /**
      * Sets the value of the field by a text representation.
@@ -1010,7 +1010,7 @@ declare module 'N/record' {
     /**
      * Gets the subrecord associated with a sublist field.
      */
-    getSublistSubrecord(options: GetSublistValueOptions): Record;
+    getSublistSubrecord(options: GetSublistValueOptions): NSRecord;
 
     /**
      * Removes the subrecord for the associated sublist field.
@@ -1029,12 +1029,12 @@ declare module 'N/record' {
     /**
      * Sets the value of a sublist field by a text representation.
      */
-    setSublistText(options: SetSublistTextOptions): Record;
+    setSublistText(options: SetSublistTextOptions): NSRecord;
 
     /**
      * Sets the value of a sublist field. (standard mode only).
      */
-    setSublistValue(options: SetSublistValueOptions): Record;
+    setSublistValue(options: SetSublistValueOptions): NSRecord;
     toString(): string;
 
     /**
@@ -1141,8 +1141,8 @@ declare module 'N/record' {
     promise(options: AttachOptions): Promise<void>;
   }
   declare interface RecordCopyFunction {
-    (options: CopyLoadOptions): Record;
-    promise(options: CopyLoadOptions): Promise<Record>;
+    (options: CopyLoadOptions): NSRecord;
+    promise(options: CopyLoadOptions): Promise<NSRecord>;
   }
   declare interface RecordCreateOptions {
     /**
@@ -1170,8 +1170,8 @@ declare module 'N/record' {
    * @throws {SuiteScriptError} SSS_MISSING_REQD_ARGUMENT if options.type is missing
    */
   declare interface RecordCreateFunction {
-    (options: RecordCreateOptions): Record;
-    promise(options: RecordCreateOptions): Promise<Record>;
+    (options: RecordCreateOptions): NSRecord;
+    promise(options: RecordCreateOptions): Promise<NSRecord>;
   }
   declare interface RecordDeleteOptions {
     /**
@@ -1194,8 +1194,8 @@ declare module 'N/record' {
    * @throws {SuiteScriptError} SSS_MISSING_REQD_ARGUMENT if options.type or options.id is missing
    */
   declare interface RecordLoadFunction {
-    (options: CopyLoadOptions): Record;
-    promise(options: CopyLoadOptions): Promise<Record>;
+    (options: CopyLoadOptions): NSRecord;
+    promise(options: CopyLoadOptions): Promise<NSRecord>;
   }
   /**
    * Delete a record object based on provided type, id and return the id of deleted record
@@ -1213,8 +1213,8 @@ declare module 'N/record' {
    * @throws {SuiteScriptError} SSS_MISSING_REQD_ARGUMENT if options.type or options.id is missing
    */
   declare interface RecordTransformFunction {
-    (options: RecordTransformOptions): Record;
-    promise(options: RecordTransformOptions): Promise<Record>;
+    (options: RecordTransformOptions): NSRecord;
+    promise(options: RecordTransformOptions): Promise<NSRecord>;
   }
   declare interface RecordTransformOptions {
     /**
