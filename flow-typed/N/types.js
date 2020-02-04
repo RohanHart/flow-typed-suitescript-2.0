@@ -12,6 +12,7 @@ declare module 'N/types' {
   import type { Record, ClientCurrentRecord } from "N/record";
   import type { Search } from "N/search";
   import type { Form } from "N/ui/serverWidget";
+  import type { Query } from "N/query";
 
   declare interface Client$fieldChangedContext {
     currentRecord: ClientCurrentRecord;
@@ -251,9 +252,12 @@ declare module 'N/types' {
 
   declare type MapReduce$config = MapReduce$Configuration;
 
-  declare interface MapReduce$ObjectReference {
-    id: string;
-    type: string;
+  declare type MapReduce$ObjectReference = {
+    type: 'search' | 'query';
+    id: number;
+  } | {
+    type: 'file';
+    path: string;
   }
 
   declare interface MapReduce$getInputDataContext {
@@ -263,7 +267,7 @@ declare module 'N/types' {
 
   declare type MapReduce$getInputData = (
     scriptContext: MapReduce$getInputDataContext
-  ) => Search | any | any[] | MapReduce$ObjectReference;
+  ) => Search | Query | any | any[] | MapReduce$ObjectReference;
 
   declare interface MapReduce$mapContext {
       +isRestarted: boolean;
