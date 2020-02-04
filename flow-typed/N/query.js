@@ -603,6 +603,12 @@ declare module 'N/query' {
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
       +columns: Column[];
+
+    /**
+     * Returns the query result as a mapped result. A mapped result is a JavaScript object with key-value pairs. In this
+     * object, the key is either the field ID or the alias that was used for the corresponding query.Column object.
+     */
+    asMap(): {[key: string]: string | number | null};
   }
   /**
    * One page of the paged query results.
