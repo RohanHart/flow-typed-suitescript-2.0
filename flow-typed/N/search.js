@@ -26,23 +26,23 @@ declare module 'N/search' {
     /**
      * Name or internal ID of the search field as a string.
      */
-      +name: $ReadOnly<string>;
+      +name: string;
 
     /**
      * Join ID for the search filter as a string.
      */
-      +join: $ReadOnly<string>;
+      +join: string;
 
     /**
      * Operator used for the search filter. This value is set with the search.Operator enum.
      * The search.Operator enum contains the valid operator values for this property.
      */
-      +operator: $ReadOnly<$Values<typeof Operator>>;
+      +operator: $Values<typeof Operator>;
 
     /**
      * Summary type for the search filter. Use this property to get or set the value of the summary type. See search.Summary.
      */
-      +summary: $ReadOnly<$Values<typeof Summary>>;
+      +summary: $Values<typeof Summary>;
 
     /**
      * Formula used by the search filter. Use this property to get or set the formula used by the search filter.

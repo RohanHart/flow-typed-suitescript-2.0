@@ -181,7 +181,7 @@ declare module 'N/query' {
     /**
      * Query type. Returns the query type given upon the creation of the query object.
      */
-      type: $ReadOnly<string>;
+      +type: string;
 
     /**
      * Query condition.
@@ -207,38 +207,38 @@ declare module 'N/query' {
      * This is a shortcut for the Query.root.child expression.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-    child: $ReadOnly<{ [key: string]: any }>;
+    +child: { [key: string]: any };
 
     /**
      * Id of this query, null if query is not saved
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      id: $ReadOnly<number>;
+      +id: number;
 
     /**
      * Name of this query, null if query is not saved
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      name: $ReadOnly<string>;
+      +name: string;
 
     /**
      * Access the root component of the query. It is the component that corresponds to the query type given upon the
      * creation of the whole Query object.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      root: $ReadOnly<Component>;
+      +root: Component;
 
     /**
      * Execute the query and return results.
      * @governance 10 points
      */
-      run: $ReadOnly<RunMethodType>;
+      run: RunMethodType;
 
     /**
      * Execute the query and return paged results.
      * @governance 10 points
      */
-      runPaged: $ReadOnly<RunPagedMethodType>;
+      runPaged: RunPagedMethodType;
 
     /**
      * join the root component of the Query with another query type. This is a shortcut for Query.root.autoJoin.
@@ -324,32 +324,32 @@ declare module 'N/query' {
      * Query type. Returns the query type of this component.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      type: $ReadOnly<string>;
+      +type: string;
 
     /**
      * Inverse target. Returns the source query type from which is this component joined.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      source: $ReadOnly<string>;
+      +source: string;
 
     /**
      * Polymorphic target. Returns the target target of this component.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      target: $ReadOnly<string>;
+      +target: string;
 
     /**
      * Returns the Component that corresponds to the ancestor of this component in the query object model.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      parent: $ReadOnly<string>;
+      +parent: string;
 
     /**
      * Children of this component. It is an object with key/value pairs where key is the name of the child component
      * and value is the corresponding Component object.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-    child: $ReadOnly<{ [key: string]: any }>;
+    +child: { [key: string]: any };
 
     /**
      * join this component with another query type. A new component corresponding to the given relationship is created
@@ -420,37 +420,37 @@ declare module 'N/query' {
      * Id of column field.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      prototype: $ReadOnly<string>;
+      +prototype: string;
 
     /**
      * Query component. Returns the Component to which this column belongs.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      component: $ReadOnly<Component>;
+      +component: Component;
 
     /**
      * Formula.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      formula: $ReadOnly<string>;
+      +formula: string;
 
     /**
      * Desired value type of the formula (if it was explicitly stated upon Column creation).
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      type: $ReadOnly<string>;
+      +type: string;
 
     /**
      * Aggregate function (value from Aggregate enum).
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      aggregate: $ReadOnly<string>;
+      +aggregate: string;
 
     /**
      * The group-by flag.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      groupBy: $ReadOnly<boolean>;
+      +groupBy: boolean;
   }
   /**
    * Specifies sorting by the values of a given column and the sort direction.
@@ -460,7 +460,7 @@ declare module 'N/query' {
      * The query column by which we want to sort.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      column: $ReadOnly<Column>;
+      +column: Column;
 
     /**
      * Flag indicating if sort is ascending
@@ -496,52 +496,52 @@ declare module 'N/query' {
      * logical operation.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      children: $ReadOnly<Condition[]>;
+      +children: Condition[];
 
     /**
      * Field id. This is only applicable to "leaf" conditions (equivalent to the former Filter).
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      fieldId: $ReadOnly<string>;
+      +fieldId: string;
 
     /**
      * Operator. This is only applicable to "leaf" conditions (equivalent to the former Filter).
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      operator: $ReadOnly<$Values<OperatorT>>;
+      +operator: $Values<OperatorT & UniOperatorT>;
 
     /**
      * Values. This is only applicable to "leaf" conditions (equivalent to the former Filter).
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      values: $ReadOnly<string[]>;
+      +values: string[];
 
     /**
      * Formula. This is only applicable to "leaf" conditions (equivalent to the former Filter).
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      formula: $ReadOnly<string>;
+      +formula: string;
 
     /**
      * Return type of the formula, if explicitly specified. This is only applicable to "leaf" conditions
      * (equivalent to the former Filter). (values from the ReturnType enum)
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      type: $ReadOnly<string>;
+      +type: string;
 
     /**
      * Aggregate function. This is only applicable to "leaf" conditions (equivalent to the former Filter).
      * (values from the Aggregate enum)
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      aggregate: $ReadOnly<string>;
+      +aggregate: string;
 
     /**
      * Query component to which this condition belongs. This is only applicable to "leaf" conditions (equivalent to the
      * former Filter).
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      component: $ReadOnly<Component>;
+      +component: Component;
   }
   /**
    * Set of results returned by the query.
@@ -551,20 +551,20 @@ declare module 'N/query' {
      * The actual query results.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      results: $ReadOnly<Result[]>;
+      +results: Result[];
 
     /**
      * The types of the return values. Array of values from the ReturnType enum. Number and order of values in the array
      * exactly matches the ResultSet.columns property.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      types: $ReadOnly<string[]>;
+      +types: string[];
 
     /**
      * The return columns.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      columns: $ReadOnly<Column[]>;
+      +columns: Column[];
 
     /**
      * Standard object for iterating through results.
@@ -581,13 +581,13 @@ declare module 'N/query' {
      * the array exactly matches the ResultSet.types, ResultSet.columns or Result.columns property.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      values: $ReadOnly<Array<string | number | null>>;
+      +values: Array<string | number | null>;
 
     /**
      * The return columns. This is equivalent to ResultSet.columns.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      columns: $ReadOnly<Column[]>;
+      +columns: Column[];
   }
   /**
    * One page of the paged query results.
@@ -597,27 +597,27 @@ declare module 'N/query' {
     /**
      * References the query results contained in this page.
      */
-      data: $ReadOnly<ResultSet>;
+      +data: ResultSet;
 
     /**
      * Indicates whether this page is the first of the paged query results.
      */
-      isFirst: $ReadOnly<boolean>;
+      +isFirst: boolean;
 
     /**
      * Indicates whether this page is the last of the paged query results.
      */
-      isLast: $ReadOnly<boolean>;
+      +isLast: boolean;
 
     /**
      * References the set of paged query results that this page is from.
      */
-      pagedData: $ReadOnly<PagedData>;
+      +pagedData: PagedData;
 
     /**
      * The range of query results for this page.
      */
-      pageRange: $ReadOnly<PageRange>;
+      +pageRange: PageRange;
   }
   /**
    * Encapsulates a set of paged query results. This object also contains information about the set of paged results
@@ -627,17 +627,17 @@ declare module 'N/query' {
     /**
      * Describes the total number of paged query results.
      */
-      count: $ReadOnly<number>;
+      +count: number;
 
     /**
      * Holds an array of page ranges for the set of paged query results.
      */
-      pageRanges: $ReadOnly<PageRange[]>;
+      +pageRanges: PageRange[];
 
     /**
      * Describes the number of query result rows per page.
      */
-      pageSize: $ReadOnly<number>;
+      +pageSize: number;
 
     /**
      * Standard SuiteScript 2.0 object for iterating through results.
@@ -652,12 +652,12 @@ declare module 'N/query' {
     /**
      * Describes the array index for this page range.
      */
-      index: $ReadOnly<number>;
+      +index: number;
 
     /**
      * Describes the number of query result rows in this page range.
      */
-      size: $ReadOnly<number>;
+      +size: number;
   }
   declare export interface Iterator {
     each(f: (result: Result) => boolean): void;

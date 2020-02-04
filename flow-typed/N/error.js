@@ -35,27 +35,27 @@ declare module 'N/error' {
     /**
      * Error ID that is automatically generated when a new error is created.
      */
-    id: $ReadOnly<string>;
+    +id: string;
 
     /**
      * Text that displays on the SuiteScript Execution Log, in the Details column.
      */
-    message: $ReadOnly<string>;
+    +message: string;
 
     /**
      * A user-defined name (error code).
      */
-    name: $ReadOnly<string>;
+    +name: string;
 
     /**
      * A list of method calls that the script is executing when the error is thrown. The most recently executed method is listed at the top.
      */
-    stack: $ReadOnly<string[]>;
+    +stack: string[];
 
     /**
      * The cause of the error message.
      */
-    cause: $ReadOnly<any>;
+    +cause: any;
 
     /**
      * Whether email notification is suppressed.
@@ -69,32 +69,32 @@ declare module 'N/error' {
     /**
      * The user event type. Holds one of the following values: beforeLoad, beforeSubmit, afterSubmit.
      */
-    eventType: $ReadOnly<EventType>;
+    +eventType: EventType;
 
     /**
      * Error ID that is automatically generated when a new error is created.
      */
-    id: $ReadOnly<string>;
+    +id: string;
 
     /**
      * Text that displays on the SuiteScript Execution Log, in the Details column.
      */
-    message: $ReadOnly<string>;
+    +message: string;
 
     /**
      * A user-defined name (error code).
      */
-    name: $ReadOnly<string>;
+    +name: string;
 
     /**
      * The internal ID of the submitted record that triggered the script. This property only holds a value when the error is thrown by an afterSubmit user event script.
      */
-    recordId: $ReadOnly<string>;
+    +recordId: string;
 
     /**
      * A list of method calls that the script is executing when the error is thrown. The most recently executed method is listed at the top.
      */
-    stack: $ReadOnly<string[]>;
+    +stack: string[];
   }
 
   declare export interface NError {
