@@ -711,10 +711,9 @@ declare module 'N/record' {
   declare export type FieldValue =
     | Date
     | number
-    | number[]
     | string
-    | string[]
     | boolean
+    | Array<number | string>
     | null;
   /**
    * Almost like a full Record, except without things like save().
