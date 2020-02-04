@@ -9,7 +9,7 @@ declare module 'N/types' {
 
   import type { ServerRequest, ServerResponse } from "N/http";
   import type { Portlet } from "N/portlet";
-  import type { NSRecord as Record, ClientCurrentRecord } from "N/record";
+  import type { Record, ClientCurrentRecord } from "N/record";
   import type { Search } from "N/search";
   import type { Form } from "N/ui/serverWidget";
 

@@ -1529,10 +1529,6 @@ declare type Pick<T, K: $Keys<T>> = $ObjMapi<
   <P>(P) => $ElementType<T, P>
 >;
 /**
- * Construct a type with a set of properties K of type T
- */
-declare type Record<K: $Keys<any>, T> = $ObjMapi<{ [k: K]: any }, <P>(P) => T>;
-/**
  * Marker for contextual 'this' type
  */
 declare interface ThisType<T> {}
