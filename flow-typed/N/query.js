@@ -58,7 +58,7 @@ declare module 'N/query' {
      */
     source: string;
   }
-  declare interface CreateConditionOptions {
+  declare type CreateConditionOptions = {|
     /**
      * Field (column) id
      */
@@ -78,8 +78,23 @@ declare module 'N/query' {
      * Aggregate function. Use the Aggregate enum.
      */
     aggregate?: string;
-  }
-  declare interface CreateConditionWithFormulaOptions {
+  |} | {|
+    /**
+     * Field (column) id
+     */
+    fieldId: string;
+
+    /**
+     * Use the Operator enum.
+     */
+    operator: $Values<UniOperatorT>;
+
+    /**
+     * Aggregate function. Use the Aggregate enum.
+     */
+    aggregate?: string;
+  |}
+  declare type CreateConditionWithFormulaOptions = {|
     /**
      * Formula
      */
@@ -94,7 +109,7 @@ declare module 'N/query' {
      * Aggregate function. Use the Aggregate enum.
      */
     aggregate?: string;
-  }
+  |}
   declare interface CreateColumnOptions {
     /**
      * Field (column) id
@@ -663,6 +678,11 @@ declare module 'N/query' {
     each(f: (result: Result) => boolean): void;
   }
 
+  declare type UniOperatorT = {|
+                               +EMPTY: "EMPTY", // "EMPTY"
+                               +EMPTY_NOT: "EMPTY_NOT", // "EMPTY_NOT"
+                               |};
+
   declare type OperatorT = {|
                             +AFTER: "AFTER", // "AFTER"
                             +AFTER_NOT: "AFTER_NOT", // "AFTER_NOT"
@@ -674,8 +694,6 @@ declare module 'N/query' {
                             +BETWEEN_NOT: "BETWEEN_NOT", // "BETWEEN_NOT"
                             +CONTAIN: "CONTAIN", // "CONTAIN"
                             +CONTAIN_NOT: "CONTAIN_NOT", // "CONTAIN_NOT"
-                            +EMPTY: "EMPTY", // "EMPTY"
-                            +EMPTY_NOT: "EMPTY_NOT", // "EMPTY_NOT"
                             +ENDWITH: "ENDWITH", // "ENDWITH"
                             +ENDWITH_NOT: "ENDWITH_NOT", // "ENDWITH_NOT"
                             +EQUAL: "EQUAL", // "EQUAL"
@@ -1485,7 +1503,7 @@ declare module 'N/query' {
      */
     runSuiteQL(options: RunSuiteQLOptions): ResultSet;
 
-    Operator: OperatorT;
+    Operator: {| ...OperatorT, ...UniOperatorT |};
     Type: TypeT;
     Aggregate: AggregateT;
     ReturnType: ReturnTypeT;
