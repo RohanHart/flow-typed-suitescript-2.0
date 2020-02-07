@@ -21,14 +21,14 @@ declare module 'N/query' {
       ...
     }): Promise<PagedData>;
   }
-  declare interface AutoJoinOptions {
+  declare type AutoJoinOptions = {|
     /**
      * The relationship field that will be used to determine the query type of the
      * newly joined component and also the columns on which the query types will be joined
      * together. For example "salesrep".
      */
     fieldId: string;
-  }
+  |}
   declare interface JoinOptions {
     /**
      * The column type (field type) that joins the parent component to the new component.
@@ -72,7 +72,7 @@ declare module 'N/query' {
     /**
      * Array of values
      */
-    +values: string | string[];
+    +values: string | Array<string | number | Date | boolean>;
 
     /**
      * Aggregate function. Use the Aggregate enum.
@@ -110,11 +110,13 @@ declare module 'N/query' {
      */
     aggregate?: string;
   |}
-  declare interface CreateColumnOptions {
+  declare type CreateColumnOptions = {|
     /**
      * Field (column) id
      */
     fieldId: string;
+
+    alias?: string;
 
     /**
      * Aggregate function. Use the Aggregate enum.
@@ -126,7 +128,12 @@ declare module 'N/query' {
      * on other columns.
      */
     groupBy?: boolean;
-  }
+
+    context?: {|
+      name: $Values<FieldContextT>;
+      params?: {[string]:any}
+    |}
+  |}
   declare interface CreateColumnWithFormulaOptions {
     /**
      * Formula
@@ -177,13 +184,13 @@ declare module 'N/query' {
     /**
      * Id of query to be loaded
      */
-    id: number;
+    id: string;
   }
   declare interface DeleteQueryOptions {
     /**
      * Id of query to be delete
      */
-    id: number;
+    id: string;
   }
   declare interface RunSuiteQLOptions {
     /**
@@ -558,6 +565,8 @@ declare module 'N/query' {
      */
       +component: Component;
   }
+  declare type MappedResult = {[key: string]: string | number | boolean | null};
+
   /**
    * Set of results returned by the query.
    */
@@ -586,6 +595,8 @@ declare module 'N/query' {
      * @governance 10 points for each page returned
      */
     iterator(): Iterator;
+
+    asMappedResults(): Array<MappedResult>;
   }
   /**
    * Corresponds to a single row of the ResultSet.
@@ -596,7 +607,7 @@ declare module 'N/query' {
      * the array exactly matches the ResultSet.types, ResultSet.columns or Result.columns property.
      * @throws {SuiteScriptError} READ_ONLY when setting the property is attempted
      */
-      +values: Array<string | number | null>;
+      +values: Array<string | number | boolean | null>;
 
     /**
      * The return columns. This is equivalent to ResultSet.columns.
@@ -608,7 +619,7 @@ declare module 'N/query' {
      * Returns the query result as a mapped result. A mapped result is a JavaScript object with key-value pairs. In this
      * object, the key is either the field ID or the alias that was used for the corresponding query.Column object.
      */
-    asMap(): {[key: string]: string | number | null};
+    asMap(): MappedResult;
   }
   /**
    * One page of the paged query results.
@@ -1479,6 +1490,15 @@ declare module 'N/query' {
                               +ZH_TW: "ZH_TW" // "ZH_TW"
                               |};
 
+  declare type FieldContextT = {|
+                                +CONVERTED: "CONVERTED",
+                                +CURRENCY_CONSOLIDATED: "CURRENCY_CONSOLIDATED",
+                                +DISPLAY: "DISPLAY",
+                                +HIERARCHY: "HIERARCHY",
+                                +HIERARCHY_IDENTIFIER: "HIERARCHY_IDENTIFIER",
+                                +RAW: "RAW"
+                               |}
+
   declare export interface NQuery {
     /**
      * Create a Query object with a single query component based on the given query type.
@@ -1514,6 +1534,7 @@ declare module 'N/query' {
     Aggregate: AggregateT;
     ReturnType: ReturnTypeT;
     SortLocale: SortLocaleT;
+    FieldContext: FieldContextT;
   }
 
 }
