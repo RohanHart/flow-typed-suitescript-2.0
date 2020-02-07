@@ -78,8 +78,6 @@ declare module 'N/format' {
    * Used to set the value of the options.type parameter.
    */
   declare type TypeT = {|
-                        ...DateTypeT,
-                        ...NumberTypeT,
                         +ADDRESS: "address", // "address"
                         +CCEXPDATE: "ccexpdate", // "ccexpdate"
                         +CCNUMBER: "ccnumber", // "ccnumber"
@@ -230,7 +228,11 @@ declare module 'N/format' {
      */
     parse(options: FormatNumberOptions): number;
 
-    Type: TypeT;
+    Type: {|
+           ...DateTypeT,
+           ...NumberTypeT,
+           ...TypeT
+           |};
     Timezone: TimezoneT;
   }
 
