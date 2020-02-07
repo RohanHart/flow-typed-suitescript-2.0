@@ -13,7 +13,7 @@ declare module 'N/config' {
     /**
      * Use the config.Type enumeration.
      */
-    type: $Values<typeof Type>;
+    type: $Values<TypeT>;
   }
 
   declare type TypeT = {|
