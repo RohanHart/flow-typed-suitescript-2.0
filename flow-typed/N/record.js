@@ -1127,14 +1127,6 @@ declare module 'N/record' {
      */
     options?: SubmitConfig;
   }
-  /**
-   * The 'value' parameter in this function is an object with matching properties and values.
-   * ex.: value: {'name': 'Bob', 'department': '12'}
-   */
-  declare interface SubmitFieldsFunction {
-    (options: SubmitFieldsOptions): number;
-    promise(options: SubmitFieldsOptions): Promise<number>;
-  }
   declare interface RecordAttachFunction {
     (options: AttachOptions): void;
     promise(options: AttachOptions): Promise<void>;
@@ -1525,12 +1517,19 @@ declare module 'N/record' {
      * - Select fields
      * - Sublist line item fields
      * - Subrecord fields (for example, address fields)
+     *
+     * The 'value' parameter in this function is an object with matching properties and values.
+     * ex.: value: {'name': 'Bob', 'department': '12'}
+     *
      * @governance 10 units for transactions, 2 for custom records, 5 for all other records
      * @restriction only supported for records and fields where DLE (Direct List Editing) is supported
      * @return {number} id of submitted record
      * @throws {SuiteScriptError} SSS_MISSING_REQD_ARGUMENT if type or id is missing
      */
-    submitFields: SubmitFieldsFunction;
+    submitFields: {
+      (options: SubmitFieldsOptions): number;
+      promise(options: SubmitFieldsOptions): Promise<number>;
+    };
     /**
      * Transforms a record from one type into another, using data from an existing record.
      */
