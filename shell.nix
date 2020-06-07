@@ -10,5 +10,8 @@ in
       pkgs.nodejs-slim
       pkgs.yarn
       pkgs.flow
+
+      # documentation
+      pkgs.discount
     ];
   }
